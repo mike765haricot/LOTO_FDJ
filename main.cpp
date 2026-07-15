@@ -38,7 +38,7 @@ void analyserTirage(const Grille& tirage, const Grille& joueur, vector<int>& sta
 
 int main() {
     // 1. Ta grille générée par ton interface web
-    Grille maGrille = {{5, 14, 21, 27, 49}, 9}; 
+    Grille maGrille = {{10, 12, 31, 44, 47}, 3}; 
     
     // 2. Configuration de la simulation
     const int NOMBRE_DE_TIRAGES = [] {
