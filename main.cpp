@@ -56,9 +56,10 @@ int main() {
 
    
     cout << "Test de build : CMake fonctionne !" << endl;
-    cout << "Démarrage du moteur de simulation (C++)..." << endl;
+    cout << "Test : le build fonctionne et le code s’exécute !" << endl;
     cout << "Grille testée : 5-14-21-27-49 | Chance: 9" << endl;
     cout << "Execution de " << NOMBRE_DE_TIRAGES << " tirages..." << endl;
+    cout << "Simulation en cours... voici un tirage exemple : " << endl;
 
     auto debut = chrono::high_resolution_clock::now();
 
@@ -73,6 +74,14 @@ int main() {
                 tirageActuel.numeros.push_back(num);
             }
         }
+
+        if (i == 0) {
+    cout << "Tirage exemple : ";
+    for (int n : tirageActuel.numeros) cout << n << " ";
+    cout << "| Chance: " << tirageActuel.chance << endl;
+}
+
+    
         // Tirage du numéro chance
         tirageActuel.chance = distChance(gen);
 
