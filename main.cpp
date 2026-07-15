@@ -4,6 +4,7 @@
 #include <algorithm>
 #include <chrono>
 #include <iomanip>
+#include <cstdlib>
 
 using namespace std;
 
@@ -40,26 +41,29 @@ int main() {
     Grille maGrille = {{5, 14, 21, 27, 49}, 9}; 
     
     // 2. Configuration de la simulation
-    const int NOMBRE_DE_TIRAGES = 10'000'000; // 10 millions de tirages (environ 64 000 ans de Loto)
+    const int NOMBRE_DE_TIRAGES = [] {
+        const char* envRuns = std::getenv("CI_TIRAGES");
+        if (envRuns) {
+            int value = std::atoi(envRuns);
+            if (value > 0) return value;
+        }
+        return 10'000'000; // 10 millions de tirages par défaut
+    }();
     
     // Tableaux de statistiques : stat[0] = 0 bon numéro, stat[5] = 5 bons numéros
-    vector<int> statsNumeros(6, 0); 
+    vector<int> statsNumeros(6, 0);
     int totalJackpots = 0;
 
     // 3. Initialisation du moteur aléatoire haute performance
-    // Note d'ingénierie : Pour une simulation massive, on utilise le Mersenne Twister (mt19937) 
-    // initialisé par l'entropie matérielle (random_device). C'est ultra-rapide en C++.
     random_device rd;
     mt19937 gen(rd());
     uniform_int_distribution<> distNumeros(1, 49);
     uniform_int_distribution<> distChance(1, 10);
 
-   
-    cout << "Test de build : CMake fonctionne !" << endl;
-    cout << "Test : le build fonctionne et le code s’exécute !" << endl;
+    cout << "Démarrage du moteur de simulation (C++)..." << endl;
     cout << "Grille testée : 5-14-21-27-49 | Chance: 9" << endl;
     cout << "Execution de " << NOMBRE_DE_TIRAGES << " tirages..." << endl;
-    cout << "Simulation en cours... voici un tirage exemple : " << endl;
+    cout << "Simulation en cours... voici un tirage exemple :" << endl;
 
     auto debut = chrono::high_resolution_clock::now();
 
@@ -75,15 +79,14 @@ int main() {
             }
         }
 
-        if (i == 0) {
-    cout << "Tirage exemple : ";
-    for (int n : tirageActuel.numeros) cout << n << " ";
-    cout << "| Chance: " << tirageActuel.chance << endl;
-}
-
-    
         // Tirage du numéro chance
         tirageActuel.chance = distChance(gen);
+
+        if (i == 0) {
+            cout << "Tirage exemple : ";
+            for (int n : tirageActuel.numeros) cout << n << " ";
+            cout << "| Chance: " << tirageActuel.chance << endl;
+        }
 
         // Analyse instantanée
         analyserTirage(tirageActuel, maGrille, statsNumeros, totalJackpots);
@@ -92,7 +95,6 @@ int main() {
     auto fin = chrono::high_resolution_clock::now();
     chrono::duration<double> duree = fin - debut;
 
-    // 5. Affichage du rapport d'audit
     cout << "\n=========================================" << endl;
     cout << "          RAPPORT DE SIMULATION          " << endl;
     cout << "=========================================" << endl;
