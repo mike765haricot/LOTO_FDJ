@@ -54,6 +54,8 @@ int main() {
     uniform_int_distribution<> distNumeros(1, 49);
     uniform_int_distribution<> distChance(1, 10);
 
+   
+    cout << "Test de build : CMake fonctionne !" << endl;
     cout << "Démarrage du moteur de simulation (C++)..." << endl;
     cout << "Grille testée : 5-14-21-27-49 | Chance: 9" << endl;
     cout << "Execution de " << NOMBRE_DE_TIRAGES << " tirages..." << endl;
