@@ -5,7 +5,7 @@
 #include <chrono>
 #include <iomanip>
 #include <cstdlib>
-#include <numeric> // Indispensable pour la fonction accumulate()
+#include <numeric>
 
 using namespace std;
 
@@ -23,7 +23,7 @@ bool estGrilleIntelligente(const vector<int>& grille) {
     int somme = accumulate(grille.begin(), grille.end(), 0);
     if (somme < 140 || somme > 210) return false;
 
-    // 2. Filtre de parité (Equilibre statistique)
+    // 2. Filtre de parite (Equilibre statistique)
     int pairs = 0;
     for (int num : grille) {
         if (num % 2 == 0) pairs++;
@@ -39,7 +39,7 @@ bool estGrilleIntelligente(const vector<int>& grille) {
     }
     if (suitesConsecutives >= 2) return false;
 
-    return true; // La grille est validée par la théorie des jeux
+    return true; // La grille est validee par la theorie des jeux
 }
 
 // ==========================================
@@ -68,10 +68,10 @@ int main() {
             int value = std::atoi(envRuns);
             if (value > 0) return value;
         }
-        return 10'000'000; // 10 millions par défaut en local
+        return 10'000'000; // 10 millions par defaut en local
     }();
 
-    // Initialisation du générateur cryptographique haute performance
+    // Initialisation du generateur cryptographique haute performance
     random_device rd;
     mt19937 gen(rd());
     uniform_int_distribution<> distNumeros(1, 49);
@@ -99,7 +99,7 @@ int main() {
         }
 
         if (estGrilleIntelligente(maGrille.numeros)) {
-            break; // On a trouvé une grille qui bat les comportements humains !
+            break; // On a trouve une grille qui bat les comportements humains !
         }
         rejets++;
     }
