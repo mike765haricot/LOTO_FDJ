@@ -31,4 +31,4 @@ jobs:
         run: |
           ./build/Essaie_Millionaire
         env:
-          CI_TIRAGES: 1000
+          CI_TIRAGES: 3000000
