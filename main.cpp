@@ -61,9 +61,15 @@ int main() {
     uniform_int_distribution<> distChance(1, 10);
 
     cout << "Démarrage du moteur de simulation (C++)..." << endl;
-    cout << "Grille testée : 5-14-21-27-49 | Chance: 9" << endl;
+    
+    // Affichage dynamique de la grille testée
+    cout << "Grille testée : ";
+    for (size_t i = 0; i < maGrille.numeros.size(); ++i) {
+        cout << maGrille.numeros[i] << (i < maGrille.numeros.size() - 1 ? "-" : "");
+    }
+    cout << " | Chance: " << maGrille.chance << endl;
+    
     cout << "Execution de " << NOMBRE_DE_TIRAGES << " tirages..." << endl;
-    cout << "Simulation en cours... voici un tirage exemple :" << endl;
 
     auto debut = chrono::high_resolution_clock::now();
 
